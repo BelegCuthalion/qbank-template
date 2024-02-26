@@ -1,0 +1,29 @@
+name: build-all
+on:
+  push:
+    paths:
+    - 'question/**'
+
+jobs:
+  build-all-job:
+    runs-on: ubuntu-latest
+    name: Build all questions
+    steps:
+    - uses: actions/checkout@v1
+    - name: Compile
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: "all-questions.tex"
+        glob_root_file: true
+        extra_fonts: res/IRBadr.ttf
+        latexmk_use_xelatex: true
+        latexmk_shell_escape: true
+    - name: Upload all questions
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: "all-questions.pdf"
+        asset_name: "all-questions.pdf"
+        tag: release
+        overwrite: true
+        prerelease: true

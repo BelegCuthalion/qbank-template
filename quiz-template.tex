@@ -1,0 +1,44 @@
+\documentclass[12pt]{article}
+
+\input{preamble}
+
+% build script assumes the following lines are as they are
+% DO NOT MESS WITH THEM
+%TEMPLATE_ISANSWERED%\markversion{ans}
+\def \schemeName {%
+	%TEMPLATE_SCHEMENAME%
+}%
+
+\begin{document}
+
+\def \ordNum {}
+\def \quizDate {}
+\newcommand*{\qList}{} 
+
+\IfFileExists{quiz/\schemeName} {%
+	\newread\schemeFile%
+	\openin\schemeFile=quiz/\schemeName%
+	\read\schemeFile to\ordNum%
+	\read\schemeFile to\quizDate%
+	\read\schemeFile to\qList%
+	\closein\schemeFile%
+}%
+
+\title{کوییز \ordNum درس}
+\author{}
+\date{}
+
+\maketitle
+
+\vspace{-2.5cm}
+
+\begin{center}تاریخ: \quizDate\end{center}
+
+\vspace{0.5cm}
+\foreach \q in \qList{%
+  \IfFileExists{question/\q.tex} {%
+		\exc \input{question/\q.tex}%
+  }%
+}%
+
+\end{document}

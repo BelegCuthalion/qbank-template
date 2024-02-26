@@ -1,0 +1,51 @@
+name: build-quiz
+on:
+  push:
+    tags:
+    - 'Q*'
+
+jobs:
+  quiz-job:
+    runs-on: ubuntu-latest
+    name: Build ${{ github.ref_name }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Compile
+      uses: xu-cheng/latex-action@v2
+      with:
+        pre_compile: "tag=${{ github.ref_name }}; cat quiz-template.tex | sed \"s/%TEMPLATE_SCHEMENAME%/$tag/\" > quiz.tex"
+        root_file: "quiz.tex"
+        glob_root_file: true
+        extra_fonts: res/IRBadr.ttf
+        latexmk_use_xelatex: true
+    - name: Upload ${{ github.ref_name }}
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: "quiz.pdf"
+        asset_name: "${{ github.ref_name }}.pdf"
+        tag: release
+        overwrite: true
+        prerelease: true
+  quiz-answers-job:
+    runs-on: ubuntu-latest
+    name: Build ${{ github.ref_name }} w/ answers
+    steps:
+    - uses: actions/checkout@v1
+    - name: Compile
+      uses: xu-cheng/latex-action@v2
+      with:
+        pre_compile: "tag=${{ github.ref_name }}; cat quiz-template.tex | sed \"s/%TEMPLATE_SCHEMENAME%/$tag/\" | sed \"s/%TEMPLATE_ISANSWERED%//\" > quiz-ans.tex"
+        root_file: "quiz-ans.tex"
+        glob_root_file: true
+        extra_fonts: res/IRBadr.ttf
+        latexmk_use_xelatex: true
+    - name: Upload ${{ github.ref_name }} w/ answers
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: "quiz-ans.pdf"
+        asset_name: "${{ github.ref_name }}-ans.pdf"
+        tag: release
+        overwrite: true
+        prerelease: true

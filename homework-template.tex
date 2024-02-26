@@ -1,0 +1,44 @@
+\documentclass[12pt]{article}
+
+\input{preamble}
+
+% build script assumes the following lines are as they are
+% DO NOT MESS WITH THEM
+%TEMPLATE_ISANSWERED%\markversion{ans}
+\def \schemeName {%
+	%TEMPLATE_SCHEMENAME%
+}%
+
+\begin{document}
+
+\def \ordNum {}
+\def \deadline {}
+\newcommand*{\qList}{} 
+
+\IfFileExists{homework/\schemeName} {%
+	\newread\schemeFile%
+	\openin\schemeFile=homework/\schemeName%
+	\read\schemeFile to\ordNum%
+	\read\schemeFile to\deadline%
+	\read\schemeFile to\qList%
+	\closein\schemeFile%
+}%
+
+\title{سری \ordNum تمرینات درس}
+\author{}
+\date{}
+
+\maketitle
+
+\vspace{-2.5cm}
+
+\begin{center}آخرین زمان تحویل: \deadline\end{center}
+
+\vspace{0.5cm}
+\foreach \q in \qList{%
+  \IfFileExists{question/\q.tex} {%
+		\exc \input{question/\q.tex}%
+  }%
+}%
+
+\end{document}

@@ -1,0 +1,51 @@
+name: build-homework
+on:
+  push:
+    tags:
+    - 'H*'
+
+jobs:
+  homework-job:
+    runs-on: ubuntu-latest
+    name: Build ${{ github.ref_name }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Compile
+      uses: xu-cheng/latex-action@v2
+      with:
+        pre_compile: "tag=${{ github.ref_name }}; cat homework-template.tex | sed \"s/%TEMPLATE_SCHEMENAME%/$tag/\" > homework.tex"
+        root_file: "homework.tex"
+        glob_root_file: true
+        extra_fonts: res/IRBadr.ttf
+        latexmk_use_xelatex: true
+    - name: Upload ${{ github.ref_name }}
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: "homework.pdf"
+        asset_name: "${{ github.ref_name }}.pdf"
+        tag: release
+        overwrite: true
+        prerelease: true
+  homework-answers-job:
+    runs-on: ubuntu-latest
+    name: Build ${{ github.ref_name }} w/ answers
+    steps:
+    - uses: actions/checkout@v1
+    - name: Compile
+      uses: xu-cheng/latex-action@v2
+      with:
+        pre_compile: "tag=${{ github.ref_name }}; cat homework-template.tex | sed \"s/%TEMPLATE_SCHEMENAME%/$tag/\" | sed \"s/%TEMPLATE_ISANSWERED%//\" > homework-ans.tex"
+        root_file: "homework-ans.tex"
+        glob_root_file: true
+        extra_fonts: res/IRBadr.ttf
+        latexmk_use_xelatex: true
+    - name: Upload ${{ github.ref_name }} w/ answers
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: "homework-ans.pdf"
+        asset_name: "${{ github.ref_name }}-ans.pdf"
+        tag: release
+        overwrite: true
+        prerelease: true

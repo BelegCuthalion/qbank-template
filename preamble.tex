@@ -1,0 +1,31 @@
+\usepackage{amsthm}
+\usepackage{amsmath, amsfonts}
+\usepackage{mathtools,array,booktabs,mathabx}
+\usepackage{natbib}
+\usepackage[inline]{enumitem}
+\usepackage{forest}
+\usepackage{diagbox}
+\usepackage{bussproofs}
+\usepackage[tableaux]{prooftrees}
+\EnableBpAbbreviations
+\usepackage{qtree}
+\usepackage{pdflscape}
+\usepackage{multicol}
+\usepackage{xepersian}
+
+\settextfont[Scale=1.3]{IRBadr}
+\linespread{1.2}
+
+\newcommand*{\maximumNumberOfQuestions}{100}
+
+\theoremstyle{definition}
+\newtheorem{exc}[section]{سوال}
+\newcommand{\exn}[1]{\setcounter{section}{#1}\addtocounter{section}{-1}\exc}
+
+\usepackage{versions}
+\excludeversion{ans}
+
+\renewcommand\beginmarkversion{\\\textbf{پاسخ: }}
+\renewcommand\endmarkversion{$\qed$}
+
+\forestset{line numbering = false, just sep = 0em, check with = {:}}

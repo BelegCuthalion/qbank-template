@@ -1,0 +1,26 @@
+\documentclass[12pt]{article}
+
+\input{preamble}
+
+\markversion{ans}
+
+\begin{document}
+
+
+\title{مجموعه‌ی سوال‌های درس}
+\author{}
+\date{}
+
+\maketitle
+
+\vspace{-2.5cm}
+
+
+\vspace{0.5cm}
+\foreach \q in {1,2,...,\maximumNumberOfQuestions}{%
+  \IfFileExists{question/\q.tex} {%
+		\exn{\q} \input{question/\q.tex}%
+  }%
+}%
+
+\end{document}
