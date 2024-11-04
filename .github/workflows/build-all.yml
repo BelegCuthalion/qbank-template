@@ -15,7 +15,10 @@ jobs:
       with:
         root_file: "all-questions.tex"
         glob_root_file: true
-        extra_fonts: res/IRBadr.ttf
+        extra_fonts: |
+          res/IRBadr.ttf
+          res/IRBadrBold.ttf
+          res/IRBadrIranic.ttf
         latexmk_use_xelatex: true
         latexmk_shell_escape: true
     - name: Upload all questions

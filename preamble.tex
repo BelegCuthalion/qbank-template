@@ -1,31 +1,68 @@
 \usepackage{amsthm}
-\usepackage{amsmath, amsfonts}
-\usepackage{mathtools,array,booktabs,mathabx}
+\usepackage{amsmath, amsfonts, mathabx}
+\usepackage{mathtools,array,booktabs,mathabx,stmaryrd}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tocloft}
+\usepackage{titletoc}
+\usepackage{graphicx}
 \usepackage{natbib}
 \usepackage[inline]{enumitem}
 \usepackage{forest}
+\forestset{m/.style={baseline,
+            for tree={parent anchor=south, 
+              child anchor=north,
+              align=center,
+              inner sep=0pt}}}
 \usepackage{diagbox}
 \usepackage{bussproofs}
 \usepackage[tableaux]{prooftrees}
 \EnableBpAbbreviations
-\usepackage{qtree}
 \usepackage{pdflscape}
 \usepackage{multicol}
+\usepackage[top=2cm]{geometry}
+\usepackage{xparse}
 \usepackage{xepersian}
+\usepackage{proof}
 
 \settextfont[Scale=1.3]{IRBadr}
 \linespread{1.2}
 
-\newcommand*{\maximumNumberOfQuestions}{100}
+\newcommand*{\maximumNumberOfQuestions}{200}
 
+
+\newlistof{exn}{exn}{}
 \theoremstyle{definition}
-\newtheorem{exc}[section]{سوال}
-\newcommand{\exn}[1]{\setcounter{section}{#1}\addtocounter{section}{-1}\exc}
+\newtheorem{exc}[exn]{پرسش}
+\newcommand{\exn}[1]{\setcounter{exn}{#1}\addtocounter{exn}{-1}\exc%
+\addcontentsline{exn}{exn}{\protect\numberline{}#1}%
+}
+
+\counterwithin*{equation}{exn}
+
+\titlecontents*{exn}[0pt]{}{}{}{%
+%TODO status
+}[\quad][]
+
+
 
 \usepackage{versions}
 \excludeversion{ans}
 
+\makeatletter
+\providecommand*{\sledom}{%
+  \mathrel{%
+    \mathpalette\@sledom\models
+  }%
+}
+\newcommand*{\@sledom}[2]{%
+  \reflectbox{$\m@th#1#2$}%
+}
+\makeatother
+
 \renewcommand\beginmarkversion{\\\textbf{پاسخ: }}
-\renewcommand\endmarkversion{$\qed$}
+\renewcommand\endmarkversion{}
 
 \forestset{line numbering = false, just sep = 0em, check with = {:}}
+
+\newcommand{\agrr}{\text{ ~ اگرر ~ }}
+\newcommand{\va}{\text{ ~ و ~ }}

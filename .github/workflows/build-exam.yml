@@ -1,11 +1,11 @@
-name: build-homework
+name: build-exam
 on:
   push:
     tags:
-    - 'H*'
+    - 'E*'
 
 jobs:
-  homework-job:
+  exam-job:
     runs-on: ubuntu-latest
     name: Build ${{ github.ref_name }}
     steps:
@@ -13,8 +13,8 @@ jobs:
     - name: Compile
       uses: xu-cheng/latex-action@v2
       with:
-        pre_compile: "tag=${{ github.ref_name }}; cat homework-template.tex | sed \"s/%TEMPLATE_SCHEMENAME%/$tag/\" > homework.tex"
-        root_file: "homework.tex"
+        pre_compile: "tag=${{ github.ref_name }}; cat exam-template.tex | sed \"s/%TEMPLATE_SCHEMENAME%/$tag/\" > exam.tex"
+        root_file: "exam.tex"
         glob_root_file: true
         extra_fonts: |
           res/IRBadr.ttf
@@ -25,12 +25,12 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: "homework.pdf"
+        file: "exam.pdf"
         asset_name: "${{ github.ref_name }}.pdf"
         tag: release
         overwrite: true
         prerelease: true
-  homework-answers-job:
+  exam-answers-job:
     runs-on: ubuntu-latest
     name: Build ${{ github.ref_name }} w/ answers
     steps:
@@ -38,8 +38,8 @@ jobs:
     - name: Compile
       uses: xu-cheng/latex-action@v2
       with:
-        pre_compile: "tag=${{ github.ref_name }}; cat homework-template.tex | sed \"s/%TEMPLATE_SCHEMENAME%/$tag/\" | sed \"s/%TEMPLATE_ISANSWERED%//\" > homework-ans.tex"
-        root_file: "homework-ans.tex"
+        pre_compile: "tag=${{ github.ref_name }}; cat exam-template.tex | sed \"s/%TEMPLATE_SCHEMENAME%/$tag/\" | sed \"s/%TEMPLATE_ISANSWERED%//\" > exam-ans.tex"
+        root_file: "exam-ans.tex"
         glob_root_file: true
         extra_fonts: res/IRBadr.ttf
         latexmk_use_xelatex: true
@@ -47,7 +47,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: "homework-ans.pdf"
+        file: "exam-ans.pdf"
         asset_name: "${{ github.ref_name }}-ans.pdf"
         tag: release
         overwrite: true

@@ -1,0 +1,66 @@
+\documentclass[12pt]{article}
+
+\input{preamble}
+
+\pagenumbering{gobble}
+
+% build script assumes the following lines are as they are
+% DO NOT MESS WITH THEM
+%TEMPLATE_ISANSWERED%
+\markversion{ans}
+\def \schemeName {%
+	%TEMPLATE_SCHEMENAME%
+}%
+
+\begin{document}
+
+\def \examTitle {}
+\def \examDate {}
+\def \examTime {}
+\def \motd {}
+\def \motdRef {}
+
+\newcommand*{\qList}{} 
+
+\IfFileExists{exam/\schemeName} {%
+	\newread\schemeFile%
+	\openin\schemeFile=exam/\schemeName%
+	\read\schemeFile to\examTitle%
+	\read\schemeFile to\examDate%
+	\read\schemeFile to\examTime%
+	\read\schemeFile to\motd%
+	\read\schemeFile to\motdRef%
+	\read\schemeFile to\qList%
+	\closein\schemeFile%
+}%
+
+\title{\vspace*{-2cm}\includegraphics[scale=0.1]{res/logo.png}\\ \vspace*{-5mm}{\small دانشکدهٔ ریاضی، آمار و علوم کامپیوتر}\\آزمون  \examTitle درس }
+\author{}
+\date{}
+
+\maketitle
+\vspace{-28mm}
+\begin{center}تاریخ: \examDate\end{center}
+\vspace{-7mm}
+\begin{center}زمان: \examTime\end{center}
+\vspace{3mm}
+\begin{quote}
+	\motd
+\end{quote}
+\begin{flushleft}
+	\motdRef
+\end{flushleft}
+\hrule
+\hrule
+
+\vspace{0.5cm}
+\foreach \q in \qList{%
+  \IfFileExists{question/\q.tex} {%
+		\exc \label{q\q} \input{question/\q.tex}%
+		\vspace*{5mm}
+		\hrule
+  }%
+}%
+\hrule
+
+\end{document}

@@ -16,7 +16,10 @@ jobs:
         pre_compile: "tag=${{ github.ref_name }}; cat quiz-template.tex | sed \"s/%TEMPLATE_SCHEMENAME%/$tag/\" > quiz.tex"
         root_file: "quiz.tex"
         glob_root_file: true
-        extra_fonts: res/IRBadr.ttf
+        extra_fonts: |
+          res/IRBadr.ttf
+          res/IRBadrBold.ttf
+          res/IRBadrIranic.ttf
         latexmk_use_xelatex: true
     - name: Upload ${{ github.ref_name }}
       uses: svenstaro/upload-release-action@v2

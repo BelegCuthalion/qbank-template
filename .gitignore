@@ -31,4 +31,12 @@ nlia.cache
 nra.cache
 *#
 *.swp
-
+*.pdf
+*.log
+*.aux
+*.fdb_latexmk
+*.fls
+README.md
+*.synctex(busy)
+*.exn
+*.out

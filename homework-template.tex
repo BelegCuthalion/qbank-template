@@ -4,7 +4,7 @@
 
 % build script assumes the following lines are as they are
 % DO NOT MESS WITH THEM
-%TEMPLATE_ISANSWERED%\markversion{ans}
+%TEMPLATE_ISANSWERED% \markversion{ans}
 \def \schemeName {%
 	%TEMPLATE_SCHEMENAME%
 }%
@@ -24,20 +24,21 @@
 	\closein\schemeFile%
 }%
 
-\title{سری \ordNum تمرینات درس}
+\title{\vspace*{-2cm}\includegraphics[scale=0.1]{res/logo.png}\\ \vspace*{-5mm}{\small دانشکده‌ی ریاضی، آمار و علوم کامپیوتر}\\ سری \ordNum تمرین‌های درس }
 \author{}
 \date{}
 
 \maketitle
 
-\vspace{-2.5cm}
+\vspace{-28mm}
 
 \begin{center}آخرین زمان تحویل: \deadline\end{center}
 
 \vspace{0.5cm}
+
 \foreach \q in \qList{%
   \IfFileExists{question/\q.tex} {%
-		\exc \input{question/\q.tex}%
+		\exc \label{q\q} \input{question/\q.tex}%
   }%
 }%
 

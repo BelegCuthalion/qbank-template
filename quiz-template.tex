@@ -24,20 +24,20 @@
 	\closein\schemeFile%
 }%
 
-\title{کوییز \ordNum درس}
+\title{\vspace*{-2cm}\includegraphics[scale=0.1]{res/logo.png}\\ \vspace*{-5mm}{\small دانشکده‌ی ریاضی، آمار و علوم کامپیوتر}\\ کوییز \ordNum درس }
 \author{}
 \date{}
 
 \maketitle
 
-\vspace{-2.5cm}
+\vspace{-28mm}
 
 \begin{center}تاریخ: \quizDate\end{center}
 
 \vspace{0.5cm}
 \foreach \q in \qList{%
   \IfFileExists{question/\q.tex} {%
-		\exc \input{question/\q.tex}%
+		\exc \label{q\q} \input{question/\q.tex}%
   }%
 }%
 
